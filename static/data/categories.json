@@ -1,0 +1,15 @@
+{
+  "categories": [
+    { "id": "CNTT", "name": "Công nghệ Thông tin" },
+    { "id": "QTKD", "name": "Quản trị Kinh doanh" },
+    { "id": "KTKT", "name": "Kế toán – Kiểm toán" },
+    { "id": "TCDH", "name": "Tài chính – Ngân hàng" },
+    { "id": "KTQLC", "name": "Kinh tế và Quản lý Công" },
+    { "id": "CNSH", "name": "Công nghệ Sinh học" },
+    { "id": "XAYD", "name": "Xây dựng" },
+    { "id": "LUAT", "name": "Luật" },
+    { "id": "NN", "name": "Ngoại ngữ" },
+    { "id": "XH", "name": "Xã hội học – Công tác xã hội – Đông Nam Á" },
+    { "id": "KHCB", "name": "Khoa học cơ bản" }
+  ]
+}

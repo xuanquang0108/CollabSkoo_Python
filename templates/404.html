@@ -1,0 +1,77 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}CollabSkoo - 404{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="{{ url_for('static', filename='js/livesearch.js') }}"></script>
+
+<style>
+  .page-404 {
+    position: relative;
+    min-height: 80vh;
+    background: url("{{ url_for('static', filename='images/404-error.png') }}") center center / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    padding: 2rem 1rem;
+    color: white;
+    text-align: center;
+  }
+
+  .page-404::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* overlay mờ để chữ nổi bật hơn */
+    z-index: 0;
+  }
+
+  .page-404-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+  }
+
+  .page-404 h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-404 p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-404 a {
+    background: #0f5adc;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+
+  .page-404 a:hover {
+    background: #0952aa;
+  }
+
+  @media (max-width: 480px) {
+    .page-404 h1 {
+      font-size: 2rem;
+    }
+
+    .page-404 p {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<div class="page-404">
+  <div class="page-404-content">
+    <a class="back-to-home" href="{{ url_for('home') }}">Về trang chủ</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,371 @@
+/* ---------- Variables ---------- */
+:root {
+  --white: #fff;
+  --black: #000;
+  --blue: #0f5adc;
+  --blue-hover: #0952aa;
+  --note: #555;
+  --pagination: #e0e0e0;
+  --pagination-hover: #c6c6c6;
+}
+
+/* ---------- Reset & Layout ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 15px;
+}
+
+
+/* ---------- Hero Section ---------- */
+.document-hero {
+  background: var(--blue);
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  color: var(--white);
+}
+
+.document-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.document-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.document-hero h1 {
+  font-weight: bold;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  animation: fadeInDown 0.8s ease;
+  font-family: Roboto, sans-serif;
+  text-transform: uppercase;
+}
+
+.document-hero p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  opacity: 0.9;
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ---------- Search ---------- */
+.search {
+  max-width: 500px;
+  margin: 1rem auto;
+  position: relative;
+}
+
+.search input {
+  background: #222;
+  color: var(--main-white);
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #222;
+  color: var(--white);
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.suggestions li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background: #111;
+}
+
+
+/* ---------- Filter Bar ---------- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0 1rem;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.filter-form select {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid #999;
+  background: var(--white);
+  cursor: pointer;
+}
+
+/* ---------- Document Grid ---------- */
+.category-section h3 {
+  text-transform: uppercase;
+}
+
+.document-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  justify-content: start; /* Prevent stretching when fewer items */
+}
+
+.document-card {
+  background: var(--white);
+  border: 1px solid #b7b7b7;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.document-thumbnail {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.document-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.document-card:hover img {
+  transform: scale(1.05);
+}
+
+.document-type-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: var(--blue);
+  color: var(--white);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+.document-info {
+  padding: 0.75rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.document-title {
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  height: 2.4rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.document-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-view-a,
+.btn-download-a {
+  flex: 1;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 4px;
+  background: var(--blue);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.btn-view-a:hover,
+.btn-download-a:hover {
+  background: var(--blue-hover);
+}
+
+
+/* ---------- Empty State ---------- */
+.empty-state {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.empty-state .btn-upload {
+  color: var(--white);
+  background: var(--main-blue);
+  padding: 0.8rem;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  border-radius: 25px;
+}
+
+.empty-state .btn-upload:hover {
+  background: var(--main-blue-hover);
+}
+
+.empty-state img {
+  max-width: 200px;
+  opacity: 0.7;
+}
+
+.empty-state h2,
+.empty-state p {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+
+/* ---------- Pagination ---------- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.pagination-btn {
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  background: var(--pagination);
+  color: var(--note);
+  text-decoration: none;
+}
+
+.pagination-btn.active {
+  background: var(--blue);
+  color: var(--white);
+}
+
+.pagination-btn:hover:not(.disabled) {
+  background: var(--pagination-hover);
+}
+
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .document-thumbnail{
+    content: url('/static/images/default-thumbnail-mobi.png');
+  }
+
+  .document-hero {
+    height: 200px;
+  }
+
+  .document-hero h1 {
+    font-size: 2rem;
+  }
+
+  .search input {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+  }
+  .filter-form select {
+    width: 100%; /* Đảm bảo select chiếm toàn bộ chiều rộng */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    box-sizing: border-box; /* Đảm bảo padding không làm mất chiều rộng */
+    margin: 0; /* Hạn chế khoảng cách không mong muốn */
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .document-thumbnail {
+    height: 120px;
+  }
+
+  .document-title {
+    font-size: 0.875rem;
+    -webkit-line-clamp: 3;
+    height: auto;
+  }
+
+  .btn-view-a,
+  .btn-download-a {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+}

@@ -1,0 +1,279 @@
+/* === Hero Section === */
+.hero-image {
+  /*position: relative;*/
+  background-image: url("/static/images/hero-section.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+  background-color: rgba(0, 0, 0 , 0.9);
+  min-height: 350px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1; /* Đảm bảo z-index không bị chồng lên các phần khác */
+}
+
+.hero-image::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  /*background: rgba(0, 0, 0, 0.6); !* Overlay *!*/
+  z-index: 2; /* Đảm bảo overlay nằm dưới chữ */
+}
+
+.hero-image .hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 3; /* Chữ nằm trên overlay */
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.cta {
+  margin: 20px 0;
+}
+
+.cta.dark {
+  background-color: var(--main-black);
+  color: white;
+  padding: 60px 30px;
+  border-radius: 20px;
+  max-width: 1100px;
+  margin: 40px auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* CTA Section */
+.cta {
+  background: var(--main-black);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.cta h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.cta p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.cta a {
+  padding: 12px 30px;
+  background: white;
+  color: #000;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+}
+
+.cta a:hover {
+  background: var(--main-blue);
+  color: white;
+}
+
+/* Category Section */
+.categories {
+  padding: 60px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.categories .container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.categories h2 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.categories .subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.cta-btn {
+  padding: 10px 20px;
+  background-color: #eee;
+  border-radius: 25px;
+  font-size: 16px;
+  text-decoration: none;
+  color: var(--main-black);
+  transition: 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: var(--main-blue);
+  color: var(--main-white);
+}
+
+/* FAQ Section */
+.faq-section {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.faq-section h2 {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.faq-item {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.faq-question {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+  color: var(--main-blue);
+}
+
+.faq-answer {
+  display: none;
+  padding: 10px 0 0 5px;
+  font-size: 16px;
+  color: #555;
+}
+
+.plus-icon {
+  font-size: 25px;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.open .faq-answer {
+  display: block;
+}
+
+.faq-item.open .plus-icon {
+  transform: rotate(45deg);
+}
+
+/* Mobile Devices */
+@media (max-width: 767px) {
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .hero p {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  .cta.dark {
+    padding: 40px 20px;
+    max-width: 100%;
+    margin: 30px 10px;
+  }
+
+  .cta h2 {
+    font-size: 28px;
+  }
+
+  .cta p {
+    font-size: 16px;
+  }
+
+  .cta a {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .categories h2 {
+    font-size: 28px;
+  }
+
+  .categories .subtitle {
+    font-size: 16px;
+  }
+
+  .cta-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .faq-section h2 {
+    font-size: 28px;
+  }
+
+  .faq-question {
+    font-size: 16px;
+  }
+
+  .faq-answer {
+    font-size: 14px;
+  }
+}
+
+/* Tablet Devices */
+@media (max-width: 1024px) {
+  .hero h1 {
+    font-size: 40px;
+  }
+
+  .cta.dark {
+  padding: 40px 20px;
+  max-width: 100%;
+  margin: 30px 10px;
+  }
+
+  .cta h2 {
+    font-size: 32px;
+  }
+
+  .categories h2 {
+    font-size: 30px;
+  }
+
+  .cta a {
+    font-size: 16px;
+    padding: 10px 25px;
+  }
+}
+

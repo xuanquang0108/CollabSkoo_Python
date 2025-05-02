@@ -1,0 +1,100 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}CollabSkoo{% endblock %}
+
+{% block content %}
+<script src="{{ url_for('static', filename='js/livesearch.js') }}"></script>
+
+<section class="homepage">
+  <!-- Hero Section -->
+  <section class="hero hero-image">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>Chào mừng đến với <span class="brand"><br><strong>CollabSkoo</strong></span></h1>
+      <p>Kho tài liệu sinh viên — Chia sẻ là cách học tốt nhất!</p>
+    </div>
+  </section>
+
+  <!-- CTA Upload -->
+  <section class="cta dark">
+    <div class="cta-content">
+      <h2>Chia sẻ tài liệu. Giúp đỡ cộng đồng.</h2>
+      <p><strong>Share the wealth of knowledge</strong> — mỗi tài liệu bạn đăng là một cánh cửa mở ra cho người khác.</p>
+      <a href="{{ url_for('upload_document') }}" class="btn">Đóng góp tài liệu</a>
+    </div>
+  </section>
+
+  <!-- Quick Categories -->
+  <section class="categories">
+    <div class="container">
+      <h2>Khám Phá Theo Ngành Học</h2>
+      <p class="subtitle">Tài liệu học tập được phân loại theo chuyên ngành phổ biến</p>
+      <div class="category-buttons" id="category-buttons"></div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+    <section id="faq-section"  class="faq-section">
+      <h2>Câu hỏi thường gặp</h2>
+      <div class="faq-item">
+        <button class="faq-question">CollabSkoo là gì? <span class="plus-icon">+</span></button>
+        <div class="faq-answer">
+          <p>CollabSkoo là nơi sinh viên tụi mình chia sẻ tài liệu học tập. Tài liệu có thể là bài giảng, đề cương, bài tập – miễn là giúp ích cho nhau.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Tôi có cần đăng ký để đóng góp tài liệu không? <span class="plus-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Không cần đăng ký gì cả.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Đóng góp có tốn phí gì không? <span class="plus-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Không tốn gì hết. Đây là nền tảng chia sẻ tự nguyện, ai có gì hay thì chia sẻ lên thôi. Cộng đồng là chính!</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+          <button class="faq-question">Tôi bị lỗi khi tải hoặc xem tài liệu, phải làm sao? <span class="plus-icon">+</span></button>
+          <div class="faq-answer">
+              – Đảm bảo đường truyền Internet ổn định.<br>
+              – Thử tải lại trang (Ctrl+F5).<br>
+              – Nếu vẫn lỗi, hãy liên hệ qua email glyphnomad28@gmail.com.
+          </div>
+      </div>
+    </section>
+
+{#FAQ section#}
+<script>
+  const faqItems = document.querySelectorAll(".faq-item");
+
+  faqItems.forEach(item => {
+    const question = item.querySelector(".faq-question");
+    question.addEventListener("click", () => {
+      item.classList.toggle("open");
+    });
+  });
+</script>
+
+{#Lọc theo ngành#}
+<script>
+  fetch("/static/data/categories.json")
+    .then(response => response.json())
+    .then(data => {
+      const categoryButtons = document.getElementById('category-buttons');
+      data.categories.forEach(category => {
+        const button = document.createElement('a');
+        button.href = "/documents?category=" + category.id;
+        button.classList.add('cta-btn');
+        button.textContent = category.name;
+        categoryButtons.appendChild(button);
+      });
+    })
+    .catch(error => console.error("Error loading JSON data: ", error));
+</script>
+
+</section>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Đóng Góp Tài Liệu - CollabNotes{% endblock %}
+
+{% block content %}
+<script src="{{ url_for('static', filename='js/livesearch.js') }}"></script>
+
+<section class="upload-section">
+  <h2>Đóng Góp tài liệu</h2>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flash-messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" enctype="multipart/form-data" class="upload-form">
+      <label>Tên tài liệu:</label>
+      <input type="text" name="title" required>
+
+      <label>Ngành học:</label>
+      <select name="category">
+        {% for cat in categories %}
+          <option value="{{ cat.id }}">{{ cat.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Phân loại tài liệu:</label>
+      <select name="document_type" required>
+        {% for type in document_types %}
+          <option value="{{ type.id }}">{{ type.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Giảng viên (nếu có):</label>
+      <input type="text" name="lecturer">
+
+      <label>Năm xuất bản (nếu có):</label>
+      <input type="number" name="publish_year">
+
+         <!-- Upload box -->
+    <section class="upload-box" id="dropArea">
+        <p>Kéo và thả file vào đây<br>hoặc bấm để chọn</p>
+        <input class="input_upload" id="fileInput" type="file" name="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.odt,.ods,.odp,.jpg,.jpeg,.png">
+        <label for="fileInput" class="upload-label">Chọn file</label>
+        <div class="upload-hint">Chấp nhận: PDF, Word, Excel, PowerPoint, ảnh JPG/PNG</div>
+        <!-- Chỗ hiện tên file -->
+        <div id="filePreview" class="file-preview"></div>
+    </section>
+
+  <!-- Submit button -->
+  <button type="submit" class="submit-btn">Gửi Tài Liệu</button>
+  </form>
+</section>
+
+<script>
+
+const dropArea = document.getElementById('dropArea');
+const fileInput = document.getElementById('fileInput');
+const filePreview = document.getElementById('filePreview');
+
+// Ngăn hành động mặc định cho toàn trang
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  window.addEventListener(eventName, (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, false);
+});
+
+// Ngăn hành động mặc định cho vùng dropArea
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  dropArea.addEventListener(eventName, (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, false);
+});
+
+// Highlight khi kéo vào
+['dragenter', 'dragover'].forEach(eventName => {
+  dropArea.addEventListener(eventName, () => {
+    dropArea.classList.add('dragover');
+  }, false);
+});
+
+// Bỏ highlight khi kéo ra
+['dragleave', 'drop'].forEach(eventName => {
+  dropArea.addEventListener(eventName, () => {
+    dropArea.classList.remove('dragover');
+  }, false);
+});
+
+// Khi thả file
+dropArea.addEventListener('drop', (e) => {
+  if (e.dataTransfer.files.length > 0) {
+    fileInput.files = e.dataTransfer.files;
+    updateFilePreview();
+  }
+});
+
+// Khi click chọn file
+fileInput.addEventListener('change', () => {
+  updateFilePreview();
+});
+
+// Hiển thị tên file
+function updateFilePreview() {
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    filePreview.innerHTML = `Đã chọn: <strong>${file.name}</strong> (${(file.size / 1024).toFixed(1)} KB)`;
+  } else {
+    filePreview.innerHTML = '';
+  }
+}
+</script>
+
+<!-- Bạn có thể dùng JavaScript để biến .flash thành popup -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const flashes = document.querySelectorAll('.flash');
+      flashes.forEach(el => {
+        // ví dụ dùng alert() đơn giản
+        alert(el.textContent.trim());
+        // hoặc bạn custom popup/modal tại đây...
+        // Sau khi show xong, có thể remove ele để không lặp lại:
+        el.remove();
+      });
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Kho tài liệu - CollabSkoo{% endblock %}
+
+{% block content %}
+<script src="{{ url_for('static', filename='js/livesearch.js') }}"></script>
+
+<!-- Hero Section with background image -->
+<section class="document-hero">
+  <div class="document-hero-overlay"></div>
+  <div class="document-hero-content container">
+    <h1>Kho Tài Liệu</h1>
+    <form class="search" action="{{ url_for('documents') }}" method="GET" onsubmit="return validateSearch()">
+      <input type="text" id="search-input" name="q" placeholder="Tìm tài liệu...">
+      <ul id="suggestions" class="suggestions" style="display: none;"></ul>
+    </form>
+  </div>
+</section>
+
+<section class="content-section container">
+  <!-- Filter Controls -->
+  <div class="filter-bar">
+    <div class="filter-controls">
+      <!-- Bộ lọc ngành -->
+      <form action="{{ url_for('documents') }}" method="get" class="filter-form">
+        <select name="category" onchange="this.form.submit()">
+          <option value="all" {% if category_filter == 'all' %}selected{% endif %}>Tất cả ngành</option>
+          {% for category in categories %}
+            <option value="{{ category.id }}" {% if category.id == category_filter %}selected{% endif %}>{{ category.name }}</option>
+          {% endfor %}
+        </select>
+      </form>
+
+      <!-- Bộ lọc kiểu tài liệu -->
+      <form action="{{ url_for('documents') }}" method="get" class="filter-form">
+        <input type="hidden" name="category" value="{{ category_filter }}">
+        <select name="doc_type" onchange="this.form.submit()">
+          <option value="all" {% if doc_type_filter == 'all' %}selected{% endif %}>Tất cả loại</option>
+          {% for type in document_types %}
+            <option value="{{ type.id }}" {% if request.args.get('doc_type') == type.id|string %}selected{% endif %}>{{ type.name|default('Chưa có') }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+  </div>
+
+  <!-- Documents Display -->
+  {% if categorized_docs %}
+    <div class="documents-container grid-view" id="documents-container">
+      {% if category_filter == 'all' %}
+        {% for category_id, docs in categorized_docs.items() %}
+          {% if docs|length > 0 %}
+            {% set category = categories | selectattr('id', 'equalto', category_id) | first %}
+            <div class="category-section">
+              <h3>{{ category.name }}</h3>
+              <div class="document-grid">
+                {% for doc in docs %}
+                  <div class="document-card">
+                    <div class="document-thumbnail">
+                      {% if doc.thumbnail %}
+                        <img src="{{ url_for('static', filename=doc.thumbnail.split('static/')[1]) }}" alt="{{ doc.title }}">
+                      {% else %}
+                        <img src="{{ url_for('static', filename='images/default-thumbnail.png') }}" alt="Default Thumbnail">
+                      {% endif %}
+                      <div class="document-type-badge">{{ doc.document_type|default('Không xác định') }}</div>
+                    </div>
+                    <div class="document-info">
+                      <h4 class="document-title">{{ doc.title }}</h4>
+                      <div class="document-actions">
+                        <a href="{{ url_for('view_document', document_id=doc['id']) }}" class="btn-view-a">Xem</a>
+                        <a href="{{ url_for('download_document', filename=doc.file_path.split('/')[-1]) }}" class="btn-download-a">Tải xuống</a>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for category_id, docs in categorized_docs.items() %}
+          {% if category_id == category_filter and docs|length > 0 %}
+            {% set category = categories | selectattr('id', 'equalto', category_id) | first %}
+            <div class="category-section">
+              <h3>{{ category.name }}</h3>
+              <div class="document-grid">
+                {% for doc in docs %}
+                  <div class="document-card">
+                    <div class="document-thumbnail">
+                      {% if doc.thumbnail %}
+                        <img src="{{ url_for('static', filename=doc.thumbnail.split('static/')[1]) }}" alt="{{ doc.title }}">
+                      {% else %}
+                        <img src="{{ url_for('static', filename='images/default-thumbnail.png') }}" alt="Default Thumbnail">
+                      {% endif %}
+                      <div class="document-type-badge">{{ doc.document_type|default('Không xác định') }}</div>
+                    </div>
+                    <div class="document-info">
+                      <h4 class="document-title">{{ doc.title }}</h4>
+                      <div class="document-actions">
+                        <a href="{{ url_for('view_document', document_id=doc['id']) }}" class="btn-view-a">Xem</a>
+                        <a href="{{ url_for('download_document', filename=doc.file) }}" class="btn-download-a">Tải xuống</a>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Pagination -->
+    {% if total_pages > 1 %}
+      <div class="pagination">
+        <a href="{{ url_for('documents', page=page-1, q=query, category=category_filter, doc_type=doc_type_filter) }}" class="pagination-btn {% if page == 1 %}disabled{% endif %}">Trước</a>
+        {% for p in range(1, total_pages + 1) %}
+          <a href="{{ url_for('documents', page=p, q=query, category=category_filter, doc_type=doc_type_filter) }}" class="pagination-btn {% if p == page %}active{% endif %}">{{ p }}</a>
+        {% endfor %}
+        <a href="{{ url_for('documents', page=page+1, q=query, category=category_filter, doc_type=doc_type_filter) }}" class="pagination-btn {% if page == total_pages %}disabled{% endif %}">Sau</a>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="empty-state">
+      <img src="{{ url_for('static', filename='images/empty-state.png') }}" alt="No documents" class="empty-image">
+      <h2>Không tìm thấy tài liệu nào phù hợp.</h2>
+      <p>Kiểm tra bộ lọc hoặc đóng góp tài liệu mới!</p>
+      <a href="{{ url_for('upload_document') }}" class="btn-upload">Đóng góp tài liệu</a>
+    </div>
+  {% endif %}
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const documentsContainer = document.getElementById('documents-container');
+
+    viewButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        viewButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        const viewType = this.getAttribute('data-view');
+        documentsContainer.className = 'documents-container ' + viewType + '-view';
+      });
+    });
+  });
+</script>
+{% endblock %}

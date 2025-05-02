@@ -1,0 +1,8 @@
+{
+  "document_types": [
+    {"id": "Đề thi", "name": "Đề thi"},
+    {"id": "Thuyết trình", "name": "Bài thuyết trình"},
+    {"id": "Bài giảng điện tử", "name": "Bài giảng điện tử"},
+    {"id": "Tài liệu ôn tập", "name": "Tài liệu ôn tập"}
+  ]
+}

@@ -1,0 +1,84 @@
+<header class="header">
+  <div class="nav-div">
+    <div class="logo">
+      <a class="logo-img" href="{{ url_for('home') }}"><img src="/static/images/Logo-without_bg-02.png"></a>
+    </div>
+    <form class="search-header" action="{{ url_for('documents') }}" method="GET" onsubmit="return validateSearch()">
+      <input type="text" id="search-input" name="q" placeholder="Tìm tài liệu...">
+      <ul id="suggestions" class="suggestions" style="display: none;"></ul>
+    </form>
+
+    <ul class="menu">
+      <li class="menu-option"><a href="{{ url_for('home') }}">Trang Chủ</a></li>
+      <li class="menu-option"><a href="{{ url_for('upload_document') }}">Đóng góp tài liệu</a></li>
+      <li class="dropdown">
+        <a href="#">Phân loại tài liệu ▾</a>
+        <ul class="dropdown-menu">
+          {% for type in document_types %}
+            <li class="menu-a"><a href="{{ url_for('documents', doc_type=type.id) }}">{{ type.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+      <li><a href="{{ url_for('documents') }}">Kho tài liệu</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span id="hamburger-icon">&#9776;</span>
+      <span id="close-icon" style="display: none;">&times;</span>
+    </div>
+  </div>
+  <nav class="side-panel" id="side-panel">
+    <ul>
+      <li><a href="{{ url_for('home') }}">Trang Chủ</a></li>
+        {% for type in document_types %}
+            <li class="menu-a"><a href="{{ url_for('documents', doc_type=type.id) }}">{{ type.name }}</a></li>
+          {% endfor %}
+      <li><a href="{{ url_for('documents') }}">Kho tài liệu</a></li>
+      <li><a href="{{ url_for('upload_document') }}">Đóng góp tài liệu</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+// Xử lý click vào hamburger để toggle side panel
+function toggleMenu() {
+  const panel = document.getElementById("side-panel");
+  const hamburger = document.getElementById("hamburger-icon");
+  const closeIcon = document.getElementById("close-icon");
+
+  panel.classList.toggle("open");
+
+  if (panel.classList.contains("open")) {
+    hamburger.style.display = "none";
+    closeIcon.style.display = "inline";
+  } else {
+    hamburger.style.display = "inline";
+    closeIcon.style.display = "none";
+  }
+}
+
+// Đóng side panel nếu click ra ngoài
+document.addEventListener('click', function(event) {
+  const panel = document.getElementById('side-panel');
+  const hamburger = document.querySelector('.hamburger');
+  const suggestions = document.getElementById('suggestions');
+
+  // Nếu side panel đang mở
+  if (panel.classList.contains('open')) {
+    // Nếu click không vào side panel và không vào hamburger
+    if (!panel.contains(event.target) && !hamburger.contains(event.target)) {
+      panel.classList.remove('open');
+      // Reset icons
+      document.getElementById('hamburger-icon').style.display = 'inline';
+      document.getElementById('close-icon').style.display = 'none';
+    }
+  }
+
+  // Nếu là search suggestions
+    if (suggestions && suggestions.style.display !== 'none') {
+        if (!suggestions.contains(event.target)) {
+            suggestions.style.display = 'none'; // Ẩn kết quả tìm kiếm
+        }
+    }
+});
+</script>
+

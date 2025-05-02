@@ -1,0 +1,21 @@
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <a class="logo-img-footer" href="{{ url_for('home') }}"><img src="/static/images/Logo-without_bg-02.png"></a>
+    </div>
+
+    <div class="footer-middle">
+      <ul class="footer-links">
+        <li><a href="{{ url_for('home') }}">Trang chủ</a></li>
+        <li><a href="{{ url_for('upload_document') }}">Đóng góp tài liệu</a></li>
+        <li><a href="{{ url_for('documents') }}">Tất cả tài liệu</a></li>
+        <li><a href="{{ url_for('home') }}#faq-section" >FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-right">
+      <p><strong>Liên hệ:</strong> glyphnomad28@gmail.com</p>
+      <p>&copy; {{ current_year }} CollabSkoo — Built with 💻 & ☕</p>
+    </div>
+  </div>
+</footer>
