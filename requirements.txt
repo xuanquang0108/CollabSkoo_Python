@@ -3,3 +3,11 @@ gunicorn==21.2.0
 python-docx
 python-pptx
 PyMuPDF
+Flask
+Werkzeug
+Pillow
+pdf2image
+Flask>=2.0
+Werkzeug>=2.0
+Pillow
+pdf2image
